@@ -12,6 +12,12 @@ namespace Grafika
 {
     public partial class Form1 : Form
     {
+        Graphics mobjGrafika;
+
+        enum enStavRukou {nahoru, dolu};
+        enStavRukou menStav;
+
+
         //------------------------------------------------------------------------
         //kontruktor
         //------------------------------------------------------------------------
@@ -40,11 +46,40 @@ namespace Grafika
 
             //vypisu na display
             //txtDisplay.Text = lstrCas;
-            
+
+            //chci, aby pero nebylo tenke ale tlustsi
+            Pen MojePero;
+            MojePero = new Pen(Color.Red, 2);
+
+            //nakreslim usecku z bodu 0,0 do 100,100
+            //mobjGrafika.DrawLine(MojePero, 0, 0, 100, 100);
+
+            //elypsy a kruznice kreslim pomoci obrysovych tvaru a pak do nich dam elypsu treba
+            //mobjGrafika.DrawEllipse(MojePero, 100, 100, 50, 50);
+
+            //---------------------------------------------------
+            //kreslim panacka
+            //---------------------------------------------------
+
+            //hlava
+            mobjGrafika.DrawEllipse(MojePero, 150, 25, 60, 60);
+
+            //telo
+            mobjGrafika.DrawLine(MojePero, 180, 87, 180, 150);
+
+            //nohy
+            mobjGrafika.DrawLine(MojePero, 180, 150, 140, 220);
+            mobjGrafika.DrawLine(MojePero, 180, 150, 210, 220);
+
+            //ruce
+            mobjGrafika.DrawLine(MojePero, 180, 100, 140, 150);
+            mobjGrafika.DrawLine(MojePero, 180, 100, 210, 150);
+
         }
 
         private void tmrCas_Tick(object sender, EventArgs e)
         {
+            //promenna
             string lstrCas;
             //naplnim promennou casem
 
@@ -56,6 +91,68 @@ namespace Grafika
             txtDisplay.Text = lstrCas;
 
             //musim sdelit timeru aby tikal, v kontruktoru
+
+            //-------------------------------------------------------
+            //zmeny rukou
+            //-------------------------------------------------------
+
+            //vykreslit stavajici ruce bilou barvou
+
+
+            //zmenit stav rukou
+            if (menStav == enStavRukou.dolu)
+            {
+                menStav = enStavRukou.nahoru;
+            }
+            else
+            {
+                menStav = enStavRukou.dolu;
+            }
+
+            //vykreslit nove ruce nejakou barvou
+
+
+            //muj zrudny debilni kod
+            Pen MojePero;
+            MojePero = new Pen(Color.Red, 2);
+
+            if (menStav == enStavRukou.dolu)
+            {
+                MojePero = new Pen(Color.White, 2);
+                mobjGrafika.DrawLine(MojePero, 180, 100, 140, 150);
+                mobjGrafika.DrawLine(MojePero, 180, 100, 210, 150);
+
+                MojePero = new Pen(Color.Red, 2);
+                mobjGrafika.DrawLine(MojePero, 180, 100, 120, 80);
+                mobjGrafika.DrawLine(MojePero, 180, 100, 230, 80);
+            }
+            if (menStav == enStavRukou.nahoru)
+            {
+                MojePero = new Pen(Color.White, 2);
+                mobjGrafika.DrawLine(MojePero, 180, 100, 120, 80);
+                mobjGrafika.DrawLine(MojePero, 180, 100, 230, 80);
+
+                MojePero = new Pen(Color.Red, 2);
+                mobjGrafika.DrawLine(MojePero, 180, 100, 140, 150);
+                mobjGrafika.DrawLine(MojePero, 180, 100, 210, 150);
+            }
+        }
+
+        //funguje tohle, kdyz nahraju form
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //vytvorim si grafiku, knihovna se pripoji na to platno
+            mobjGrafika = pbPlatno.CreateGraphics();
+
+            //menim stav rukou
+
+
+            //pocatecni stav
+            menStav = enStavRukou.dolu;
+
+            //zvednute ruce
+
+            
         }
     }
 }
